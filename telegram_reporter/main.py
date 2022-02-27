@@ -5,17 +5,8 @@ from telethon import TelegramClient
 from telethon import functions, types
 import questionary
 
-api_id = int(questionary.password('Api ID:').ask())
-api_hash = questionary.password('Api hash:').ask()
 
-
-client = TelegramClient('session_new', api_id, api_hash)
-client.start()
-
-print('Bot started')
-
-
-async def main():
+async def main(client):
     number_of_channels_rep = 150
 
     telegram_list = open('../telegram_db', 'r').readlines()
@@ -37,7 +28,20 @@ async def main():
         except ValueError:
             print("Channel not found")
         await asyncio.sleep(10 + 2 * random.random())
-with client:
 
-    client.loop.run_until_complete(main())
 
+def run():
+    api_id = int(questionary.password('Api ID:').ask())
+    api_hash = questionary.password('Api hash:').ask()
+
+    client = TelegramClient('session_new', api_id, api_hash)
+    client.start()
+
+    with client:
+        client.loop.run_until_complete(main(client))
+
+    print('Bot started')
+
+
+if __name__ == '__main__':
+    run()
