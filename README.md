@@ -1,2 +1,2 @@
 # telegram_reporter
-anti rassiaizm channels reporter
+anti russiaizm channels reporter
